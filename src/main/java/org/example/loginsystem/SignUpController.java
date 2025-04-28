@@ -1,4 +1,4 @@
 package org.example.loginsystem;
 
-public class SingUpController {
+public class SignUpController {
 }

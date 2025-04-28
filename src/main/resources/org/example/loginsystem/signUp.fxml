@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" prefHeight="414.0" prefWidth="365.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loginsystem.SignUpController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <Label fx:id="errorLabel" prefHeight="43.0" prefWidth="282.0" textFill="RED">
+        <font>
+            <Font size="18.0" />
+        </font>
+    </Label>
+    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="365.0" text="Sign Up" textAlignment="CENTER">
+        <font>
+            <Font name="Corbel" size="25.0" />
+        </font>
+    </Label>
+    <TextField fx:id="email" promptText="Write email" />
+    <TextField fx:id="username" promptText="Write username" />
+    <PasswordField fx:id="password" promptText="Type password" />
+    <PasswordField fx:id="passwordAgain" promptText="Type password Again" />
+    <TextField fx:id="phoneNumber" promptText="Type phone number" />
+    <MenuButton fx:id="sexMenuButton" mnemonicParsing="false" text="Sex">
+        <items>
+            <MenuItem fx:id="maleMenuItem" mnemonicParsing="false" text="Male" />
+            <MenuItem fx:id="femaleMenuItem" mnemonicParsing="false" text="Female" />
+            <MenuItem fx:id="otherMenuItem" mnemonicParsing="false" text="Other" />
+        </items>
+    </MenuButton>
+    <DatePicker fx:id="birthdayDatePicker" promptText="Birthday" />
+    <Button fx:id="signUpButton" mnemonicParsing="false"  text="Sign Up" />
+    <Button fx:id="backButton" mnemonicParsing="false"  text="Back to Login" />
+</VBox>

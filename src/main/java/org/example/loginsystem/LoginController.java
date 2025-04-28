@@ -25,7 +25,7 @@ public class LoginController {
     @FXML
     private Label errorLabel;
     @FXML
-    private Button singUpButton;
+    private Button signUpButton;
     @FXML
     private Button loginButton;
 
@@ -93,7 +93,7 @@ public class LoginController {
         }
     }
     @FXML
-    protected void onSingUpButtonClick() throws IOException {
-        navigateToNextPage("singUp" , singUpButton);
+    protected void onSignUpButtonClick() throws IOException {
+        navigateToNextPage("signUp" , signUpButton);
     }
 }

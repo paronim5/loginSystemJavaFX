@@ -106,7 +106,7 @@ public class User {
 //
  //endregion
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode(password));
+        //System.out.println(encoder.encode(password)); //for database
         return encoder.encode(password);
     }
     public boolean checkPassword(String password, String hashedPassword) {

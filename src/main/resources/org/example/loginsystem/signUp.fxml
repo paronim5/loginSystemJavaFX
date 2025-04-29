@@ -21,17 +21,35 @@
     </Label>
     <TextField fx:id="email" promptText="Write email" />
     <TextField fx:id="username" promptText="Write username" />
+   <TextField fx:id="firstname" promptText="Write firstname" />
+   <TextField fx:id="lastname" promptText="Write lastname" />
     <PasswordField fx:id="password" promptText="Type password" />
     <PasswordField fx:id="passwordAgain" promptText="Type password Again" />
     <TextField fx:id="phoneNumber" promptText="Type phone number" />
-    <MenuButton fx:id="sexMenuButton" mnemonicParsing="false" text="Sex">
-        <items>
-            <MenuItem fx:id="maleMenuItem" mnemonicParsing="false" text="Male" />
-            <MenuItem fx:id="femaleMenuItem" mnemonicParsing="false" text="Female" />
-            <MenuItem fx:id="otherMenuItem" mnemonicParsing="false" text="Other" />
-        </items>
-    </MenuButton>
+<!--    <MenuButton fx:id="sexMenuButton" mnemonicParsing="false" text="Sex">-->
+<!--        <items>-->
+<!--            <MenuItem fx:id="maleMenuItem" mnemonicParsing="false" text="Male" />-->
+<!--            <MenuItem fx:id="femaleMenuItem" mnemonicParsing="false" text="Female" />-->
+<!--            <MenuItem fx:id="otherMenuItem" mnemonicParsing="false" text="Other" />-->
+<!--        </items>-->
+<!--    </MenuButton>-->
+<!--    <ToggleGroup fx:id="sexToggleGroup">-->
+<!--        <RadioButton fx:id="maleRadioButton" text="Male" toggleGroup="$sexToggleGroup" />-->
+<!--        <RadioButton fx:id="femaleRadioButton" text="Female" toggleGroup="$sexToggleGroup" />-->
+<!--        <RadioButton fx:id="otherRadioButton" text="Other" toggleGroup="$sexToggleGroup" />-->
+<!--    </ToggleGroup>-->
     <DatePicker fx:id="birthdayDatePicker" promptText="Birthday" />
-    <Button fx:id="signUpButton" mnemonicParsing="false"  text="Sign Up" />
-    <Button fx:id="backButton" mnemonicParsing="false"  text="Back to Login" />
+    <VBox alignment="CENTER" spacing="10">
+        <Label styleClass="label" text="Select Sex:" />
+
+        <HBox alignment="CENTER" spacing="10">
+            <RadioButton fx:id="maleRadioButton" styleClass="radio-button" text="Male" />
+            <RadioButton fx:id="femaleRadioButton" styleClass="radio-button" text="Female" />
+            <RadioButton fx:id="otherRadioButton" styleClass="radio-button" text="Other" />
+        </HBox>
+
+        <Label fx:id="selectedSexLabel" styleClass="label" text="Selected Sex: None" />
+    </VBox>
+    <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#onSignUpButtonClick" text="Sign Up" />
+    <Button fx:id="backButton" mnemonicParsing="false" onAction="#onBackButtonClick" text="Back to Login" />
 </VBox>

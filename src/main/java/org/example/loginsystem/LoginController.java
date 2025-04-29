@@ -21,6 +21,8 @@ public class LoginController {
     @FXML
     private TextField email;
     @FXML
+    private TextField username;
+    @FXML
     private PasswordField password;
     @FXML
     private Label errorLabel;
@@ -39,7 +41,7 @@ public class LoginController {
 //            errorLabel.setText("User not found");
 //        }
         try {
-            boolean login = login(session, email.getText(), password.getText());
+            boolean login = login(session, email.getText(), password.getText(), username.getText());
             if (login) {
                 email.setText("");
                 password.setText("");
@@ -63,14 +65,14 @@ public class LoginController {
          }
     }
 
-    private boolean login(Session session, String email, String password) throws UserNotFoundException{
+    private boolean login(Session session, String email, String password, String username ) throws UserNotFoundException{
        // Transaction tx = session.beginTransaction();
         User user = findUserByEmail(session, email);
 
-       return user.getEmail().equals(email) && user.checkPassword(password, user.getPassword());
+       return user.getEmail().equals(email) && user.checkPassword(password, user.getPassword()) && user.getUsername().equals(username);
     }
 
-    public void navigateToNextPage( String pageName, Button button) throws IOException {
+    private void navigateToNextPage( String pageName, Button button) throws IOException {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName + ".fxml"));
@@ -94,6 +96,8 @@ public class LoginController {
     }
     @FXML
     protected void onSignUpButtonClick() throws IOException {
+
         navigateToNextPage("signUp" , signUpButton);
     }
+
 }

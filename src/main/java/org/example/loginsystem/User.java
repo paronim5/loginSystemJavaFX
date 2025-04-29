@@ -8,6 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -15,26 +16,64 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserID")
     private int id;
-    @Column (name = "name")
+    @Column (name = "Email")
     private String email;
-    @Column (name = "password")
+    @Column (name = "Password")
     private String password;
+    @Column(name = "Username")
+    private String username;
+    @Column(name = "Birthday")
+    private Date birthday;
+    @Column(name = "RoleID")
+    private int roleID;
+
+//    private Role role;
+
+    @Column(name = "FirstName")
+    private String firstName;
+    @Column(name = "LastName")
+    private String lastName;
+    @Column(name = "Phone")
+    private String phone;
+    @Column(name = "SexID")
+    private int sexId;
+//    private Sex sex ;
 
     public User() {
     }
 
-    public User( String email, String password) {
-        this.email = email;
-        this.password = hashPassword(password);
-    }
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + email + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", birthday=" + birthday +
+//                ", role=" + role +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+//                ", sex=" + sex +
                 '}';
+    }
+
+    public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    public int getSexId() {
+        return sexId;
+    }
+
+    public void setSexId(int sexId) {
+        this.sexId = sexId;
     }
 
     public int getId() {
@@ -61,14 +100,70 @@ public class User {
         this.password = hashPassword(password);
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+//
+//    public Sex getSex() {
+//        return sex;
+//    }
+//
+//    public void setSex(Sex sex) {
+//        this.sex = sex;
+//    }
+//
+//    public Role getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(Role role) {
+//        this.role = role;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(email, user.email) && Objects.equals(password, user.password);
     }
-
-
 
     @Override
     public int hashCode() {

@@ -17,6 +17,7 @@
 
         <!-- Register entity classes -->
         <mapping class="org.example.loginsystem.User"/>
+        <mapping class="org.example.loginsystem.CalendarEvent"/>
 
     </session-factory>
 </hibernate-configuration>

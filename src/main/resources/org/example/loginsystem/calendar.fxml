@@ -12,6 +12,7 @@
                        <MenuItem fx:id="prevMonthMenuItem" text="Previous Month" />
                        <MenuItem fx:id="todayMenuItem" text="Today" />
                        <MenuItem fx:id="nextMonthMenuItem" text="Next Month" />
+                       <MenuItem fx:id="addEventMenuItem" text="Add New Event" />
                    </items>
                </Menu>
            </menus>

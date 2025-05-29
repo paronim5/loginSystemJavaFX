@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "calendarEvent")
+@Table(name = "CalendarEvent")
 public class CalendarEvent {
 
     @Id
@@ -82,5 +82,17 @@ public class CalendarEvent {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    @Override
+    public String toString() {
+        return "CalendarEvent{" +
+                "eventID=" + eventID +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", userID=" + userID +
+                ", eventDate=" + eventDate +
+                ", done=" + done +
+                '}';
     }
 }

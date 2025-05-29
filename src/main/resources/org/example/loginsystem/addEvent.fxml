@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- AddEvent.fxml -->
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.loginsystem.AddEventController">
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <TextField fx:id="eventTitleField" promptText="Event Title" />
+            <TextArea fx:id="descriptionArea" promptText="Description" prefHeight="100" />
+            <HBox spacing="10">
+                <Button text="Save" onAction="#saveEvent" />
+                <Button text="Cancel" onAction="#closeWindow" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

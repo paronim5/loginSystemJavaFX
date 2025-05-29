@@ -1,0 +1,88 @@
+.root {
+    -fx-background-color: black;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.menu-bar {
+    -fx-background-color: black;
+    -fx-border-color: #00FF00;
+    -fx-border-width: 1px;
+}
+
+.menu {
+    -fx-background-color: black;
+    -fx-text-fill: #00FF00;
+    -fx-font-size: 16px;
+}
+
+.menu-item {
+    -fx-background-color: black;
+    -fx-text-fill: #00FF00;
+    -fx-font-size: 14px;
+}
+
+.menu-item:hover {
+    -fx-background-color: #00AA00;
+}
+
+.label, .menu-bar .label {
+    -fx-text-fill: #00FF00;
+    -fx-font-size: 18px;
+}
+
+.grid-pane {
+    -fx-background-color: black;
+    -fx-grid-lines-visible: true;
+    -fx-grid-line-color: #00FF00;
+}
+
+.grid-pane .label {
+    -fx-text-fill: #00FF00;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: #00FF00;
+    -fx-border-width: 1px;
+    -fx-text-fill: #00FF00;
+    -fx-padding: 5px 10px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #00AA00;
+}
+
+/* Falling code animation */
+@keyframes matrixCode {
+    0% { opacity: 0.2; }
+    25% { opacity: 0.5; }
+    50% { opacity: 1; }
+    75% { opacity: 0.5; }
+    100% { opacity: 0.2; }
+}
+
+.matrix-effect {
+    -fx-animation: matrixCode 1s linear infinite;
+}
+
+/* Background animation */
+.background {
+    -fx-background-color: black;
+    -fx-effect: dropshadow(gaussian, #00FF00, 10, 0, 0, 0);
+}
+
+/* Day cells */
+.day-cell {
+    -fx-background-color: black;
+    -fx-text-fill: #00FF00;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+.day-cell:hover {
+    -fx-background-color: #00AA00;
+}

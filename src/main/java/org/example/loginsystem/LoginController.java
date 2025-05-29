@@ -47,7 +47,7 @@ public class LoginController {
                 password.setText("");
 
             }
-            navigateToNextPage("main", loginButton);
+            navigateToNextPage("calendar", loginButton);
         }catch(UserNotFoundException e) {
             errorLabel.setText(e.getMessage());
         } catch (IOException e) {
@@ -72,7 +72,7 @@ public class LoginController {
        return user.getEmail().equals(email) && user.checkPassword(password, user.getPassword()) && user.getUsername().equals(username);
     }
 
-    private void navigateToNextPage( String pageName, Button button) throws IOException {
+    private void navigateToNextPage(String pageName, Button button) throws IOException {
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName + ".fxml"));
@@ -86,8 +86,20 @@ public class LoginController {
             Stage stage = (Stage) button.getScene().getWindow();
 
             // Set the new scene
-            stage.setScene(new Scene(root));
-//            stage.setTitle(pageName.replaceFirst("^[a-z]", c -> c.toString().toUpperCase()) + " Page"); //not working
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+          //  stage.setTitle(pageName.replaceFirst("^[a-z]", c -> c.toString().toUpperCase()) + " Page");
+
+            // Check if the pageName is "calendar" and call initializeCalendar
+            if (pageName.equals("calendar")) {
+                CalendarController controller = loader.getController();
+                if (controller != null) {
+                    controller.initializeCalendar();
+                } else {
+                    System.err.println("CalendarController is null.");
+                }
+            }
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

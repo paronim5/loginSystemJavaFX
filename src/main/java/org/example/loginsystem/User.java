@@ -36,7 +36,7 @@ public class User {
     @Column(name = "LastName")
     private String lastName;
     @Column(name = "Phone")
-    private String phone;
+    private String phone; //TODO phone is not writing to the database table
     @Column(name = "SexID")
     private int sexId;
 //    private Sex sex ;

@@ -41,13 +41,13 @@ public class LoginController {
 //            errorLabel.setText("User not found");
 //        }
         try {
-            boolean login = login(session, email.getText(), password.getText(), username.getText());
-            if (login) {
+            int login = login(session, email.getText(), password.getText(), username.getText());
+            if (login != -1) {
                 email.setText("");
                 password.setText("");
 
             }
-            navigateToNextPage("calendar", loginButton);
+            navigateToNextPage("calendar", loginButton, login);
         }catch(UserNotFoundException e) {
             errorLabel.setText(e.getMessage());
         } catch (IOException e) {
@@ -65,11 +65,15 @@ public class LoginController {
          }
     }
 
-    private boolean login(Session session, String email, String password, String username ) throws UserNotFoundException{
+    private int login(Session session, String email, String password, String username ) throws UserNotFoundException{
        // Transaction tx = session.beginTransaction();
         User user = findUserByEmail(session, email);
 
-       return user.getEmail().equals(email) && user.checkPassword(password, user.getPassword()) && user.getUsername().equals(username);
+        if (user.getEmail().equals(email) && user.checkPassword(password, user.getPassword()) && user.getUsername().equals(username)){
+            return user.getId();
+        }else {
+            return -1;
+        }
     }
 
     private void navigateToNextPage(String pageName, Button button) throws IOException {
@@ -95,6 +99,42 @@ public class LoginController {
                 CalendarController controller = loader.getController();
                 if (controller != null) {
                     controller.initializeCalendar();
+                } else {
+                    System.err.println("CalendarController is null.");
+                }
+            }
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            errorLabel.setText("Failed to load " + pageName + " page.");
+        }
+    }
+
+    private void navigateToNextPage(String pageName, Button button, int userId) throws IOException {
+        try {
+            // Load the FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName + ".fxml"));
+            Parent root = loader.load();
+
+            // Add CSS to the root node
+            String cssPath = getClass().getResource(pageName + ".css").toExternalForm();
+            root.getStylesheets().add(cssPath);
+
+            // Get the current stage (window)
+            Stage stage = (Stage) button.getScene().getWindow();
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            //  stage.setTitle(pageName.replaceFirst("^[a-z]", c -> c.toString().toUpperCase()) + " Page");
+
+            // Check if the pageName is "calendar" and call initializeCalendar
+            if (pageName.equals("calendar")) {
+                CalendarController controller = loader.getController();
+                if (controller != null) {
+                    controller.initializeCalendar();
+                    controller.setCurrentUserID(userId);
                 } else {
                     System.err.println("CalendarController is null.");
                 }

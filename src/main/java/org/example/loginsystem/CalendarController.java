@@ -31,7 +31,7 @@ public class CalendarController {
     @FXML private MenuItem addEventMenuItem;
 
     private YearMonth currentYearMonth;
-    private int currentUserID = 4; // TODO: Replace with real logged-in user ID
+    private int currentUserID ; // TODO: Replace with real logged-in user ID
 
     /**
      * Initializes the calendar when the FXML is loaded.
@@ -45,6 +45,10 @@ public class CalendarController {
         todayMenuItem.setOnAction(e -> showCurrentMonth());
         nextMonthMenuItem.setOnAction(e -> changeMonth(1));
         addEventMenuItem.setOnAction(e -> showAddEventDialog());
+    }
+
+    public void setCurrentUserID(int currentUserID) {
+        this.currentUserID = currentUserID;
     }
 
     /**

@@ -17,13 +17,13 @@ public class AddEventController {
 
     private CalendarEvent eventToEdit;
     private LocalDate selectedDate;
-    private int userID =4;
+    private int userID;
     private Stage stage;
 
     // Called by CalendarController to pass data
     public void initData(LocalDate date, int userID, Stage stage, CalendarEvent event) {
         this.selectedDate = date;
-        this.userID = 4;
+        this.userID =userID;
         this.stage = stage;
         this.eventToEdit = event;
 

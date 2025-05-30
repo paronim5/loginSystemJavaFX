@@ -8,6 +8,12 @@
     -fx-border-color: #00FF00;
     -fx-border-width: 1px;
 }
+.grid-pane .label {
+    -fx-text-fill: #00FFAA; /* Softer green for better contrast */
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+}
 
 .menu {
     -fx-background-color: black;

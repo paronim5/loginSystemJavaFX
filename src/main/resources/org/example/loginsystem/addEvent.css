@@ -1,0 +1,61 @@
+.root {
+    -fx-background-color: black;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* Labels */
+.label {
+    -fx-text-fill: #00FF00; /* Bright green text */
+    -fx-font-size: 16px;
+}
+
+/* Input fields */
+.text-field, .text-area, .date-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: #00FF00;
+    -fx-border-width: 1px;
+    -fx-text-fill: #00FF00;
+    -fx-prompt-text-fill: #00AA00;
+    -fx-padding: 5px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+}
+
+/* TextArea needs special love */
+.text-area {
+    -fx-control-inner-background: black;
+}
+
+/* Checkboxes */
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #00FF00;
+    -fx-border-width: 1px;
+}
+/*.check-box .mark {*/
+/*    -fx-background-color: #00FF00;*/
+/*}*/
+.check-box {
+    -fx-text-fill: #00FF00;
+    -fx-font-size: 14px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: #00FF00;
+    -fx-border-width: 1px;
+    -fx-text-fill: #00FF00;
+    -fx-padding: 5px 10px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 16px;
+}
+.button:hover {
+    -fx-background-color: #00AA00;
+}
+
+/* Optional: Falling Code Animation Class */
+.matrix-effect {
+    -fx-effect: innershadow(gaussian, limegreen, 10, 0, 0, 0);
+}

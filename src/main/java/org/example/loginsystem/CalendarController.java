@@ -56,22 +56,26 @@ public class CalendarController {
         // Update month/year label
         monthYearLabel.setText(currentYearMonth.getMonth().toString() + " " + currentYearMonth.getYear());
 
-        // Add day headers (Monday - Sunday)
+        // --- Add Day Headers (Monday - Sunday) ---
+        String[] dayNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         for (int i = 0; i < 7; i++) {
-            DayOfWeek dayOfWeek = DayOfWeek.of(((i + 1) % 7) + 1); // Start week on Monday
-            Text header = new Text(dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+            Label header = new Label(dayNames[i]);
+            header.setStyle("-fx-font-weight: bold; -fx-text-fill: #00FFAA;");
             GridPane.setRowIndex(header, 0);
             GridPane.setColumnIndex(header, i);
             calendarGrid.add(header, i, 0);
         }
 
-        // First day of the month
+        // --- First day of the month and alignment ---
         LocalDate firstDay = currentYearMonth.atDay(1);
-        int firstDayCol = (firstDay.getDayOfWeek().getValue() % 7); // Adjust for Monday start
-        int daysInMonth = currentYearMonth.lengthOfMonth();
+        int firstDayOfWeekValue = firstDay.getDayOfWeek().getValue(); // Monday=1 ... Sunday=7
+        int firstDayColumn = (firstDayOfWeekValue + 6) % 7; // Map Monday to column 0
 
-        // Fill in the calendar grid
-        for (int day = 1, row = 1, col = firstDayCol; day <= daysInMonth; day++, col++) {
+        // --- Fill in the calendar grid ---
+        int row = 1;
+        int col = firstDayColumn;
+
+        for (int day = 1; day <= currentYearMonth.lengthOfMonth(); day++, col++) {
             if (col > 6) {
                 col = 0;
                 row++;
@@ -84,7 +88,6 @@ public class CalendarController {
             calendarGrid.add(dayBox, col, row);
         }
     }
-
     /**
      * Creates a cell (VBox) representing a single calendar day.
      */
@@ -100,7 +103,17 @@ public class CalendarController {
             Label eventLabel = new Label("EVENT");
             eventLabel.setStyle("-fx-text-fill: black; -fx-font-size: 10px;");
             dayBox.getChildren().addAll(dayLabel, eventLabel);
-            dayBox.setStyle("-fx-background-color: yellow; -fx-alignment: center; -fx-padding: 5px;");
+
+            // Set background based on "done" status
+            if (event.isDone()) {
+                dayBox.setStyle(
+                        "-fx-background-color: violet; -fx-alignment: center; -fx-padding: 5px;"
+                );
+            } else {
+                dayBox.setStyle(
+                        "-fx-background-color: yellow; -fx-alignment: center; -fx-padding: 5px;"
+                );
+            }
         } else {
             dayBox.getChildren().add(dayLabel);
         }
@@ -168,14 +181,22 @@ public class CalendarController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("addEvent.fxml"));
             Parent root = loader.load();
 
+            String cssPath = getClass().getResource("addEvent" + ".css").toExternalForm();
+            root.getStylesheets().add(cssPath);
+
+            AddEventController controller = loader.getController();
+
             Stage stage = new Stage();
+// this must be after stage is loaded otherwise data will load after you close window or will not load at all
+            controller.initData(selectedDate, currentUserID, stage, eventToEdit);
+
+
             stage.setTitle((eventToEdit == null ? "Add" : "Edit") + " Event - " + selectedDate);
             stage.setScene(new Scene(root, 400, 320));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
 
-            AddEventController controller = loader.getController();
-            controller.initData(selectedDate, currentUserID, stage, eventToEdit);
+
 
             populateCalendar(); // Refresh after save
 

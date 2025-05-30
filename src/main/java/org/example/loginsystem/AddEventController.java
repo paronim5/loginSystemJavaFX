@@ -27,12 +27,8 @@ public class AddEventController {
         this.stage = stage;
         this.eventToEdit = event;
 
-        // Set UI based on mode
-        if (eventToEdit != null) {
-            System.out.println("Editing event: " + eventToEdit.getName());
-        } else {
-            System.out.println("Adding new event");
-        }
+
+initialize();
     }
 
     @FXML

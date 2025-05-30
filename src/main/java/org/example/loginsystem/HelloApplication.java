@@ -22,5 +22,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-    } //TODO create new database table with inappropriate words so user can't create firstname/lastname/username with those words
+    }
 }

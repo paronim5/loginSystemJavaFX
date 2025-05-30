@@ -133,8 +133,9 @@ public class LoginController {
             if (pageName.equals("calendar")) {
                 CalendarController controller = loader.getController();
                 if (controller != null) {
-                    controller.initializeCalendar();
                     controller.setCurrentUserID(userId);
+                    controller.initializeCalendar();
+
                 } else {
                     System.err.println("CalendarController is null.");
                 }

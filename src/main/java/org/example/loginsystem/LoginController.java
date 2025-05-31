@@ -41,13 +41,18 @@ public class LoginController {
 //            errorLabel.setText("User not found");
 //        }
         try {
-            int login = login(session, email.getText(), password.getText(), username.getText());
+            int login = login(session, email.getText().trim(), password.getText().trim(), username.getText().trim());
             if (login != -1) {
                 email.setText("");
                 password.setText("");
-
+                username.setText("");
+                navigateToNextPage("calendar", loginButton, login);
+                System.out.println("Login successful with username " + username.getText().trim());
+                System.out.println("Login successful with userid  " + login);
             }
-            navigateToNextPage("calendar", loginButton, login);
+            else {
+                errorLabel.setText("Invalid email or password or username");
+            }
         }catch(UserNotFoundException e) {
             errorLabel.setText(e.getMessage());
         } catch (IOException e) {

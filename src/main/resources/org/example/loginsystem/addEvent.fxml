@@ -32,6 +32,7 @@
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Save" onAction="#saveEvent" defaultButton="true" />
                 <Button text="Cancel" onAction="#closeWindow" cancelButton="true" />
+                <Button text="delete" onAction="#deleteEvent"  styleClass="button" />
             </HBox>
         </VBox>
     </center>

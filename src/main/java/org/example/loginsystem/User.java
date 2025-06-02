@@ -11,6 +11,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * user class represents user entity in code
+ */
 @Entity
 @Table(name = "Users")
 public class User {
@@ -170,6 +173,11 @@ public class User {
         return Objects.hash(email, password);
     }
 
+    /**
+     * method to hash password before sending it to the database
+     * @param password password to encrypt
+     * @return
+     */
     private String hashPassword(String password) {
 //region hash password
 //        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -204,6 +212,13 @@ public class User {
         //System.out.println(encoder.encode(password)); //for database
         return encoder.encode(password);
     }
+
+    /**
+     * method to check if the hashed password in the database is equaled to password user has provided
+     * @param password user password from login
+     * @param hashedPassword hashed password from database
+     * @return
+     */
     public boolean checkPassword(String password, String hashedPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.matches(password, hashedPassword);

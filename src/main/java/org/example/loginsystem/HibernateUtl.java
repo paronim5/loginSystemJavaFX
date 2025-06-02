@@ -7,6 +7,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * hibernate utility class for opening connection with database throughout hibernate ORM. uses Singleton design pattern
+ */
 public class HibernateUtl {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 

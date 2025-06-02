@@ -16,6 +16,9 @@ import org.hibernate.Transaction;
 
 import java.io.IOException;
 
+/**
+ * controller for login fxml page
+ */
 public class LoginController {
     Session session = HibernateUtl.openSession();
     @FXML
@@ -31,6 +34,9 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    /**
+     * action to perform when submit button is pressed
+     */
     @FXML
     protected void onSubmitButtonClick() {
 //        System.out.println(login(session, email.getText(), password.getText()));
@@ -59,6 +65,14 @@ public class LoginController {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * method to find user in database by email
+     * @param session hibernate session
+     * @param email email of the user
+     * @return
+     * @throws UserNotFoundException custom exception when user is not in the database
+     */
     private User findUserByEmail(Session session, String email) throws UserNotFoundException{
 
         User user = session.createQuery("from User where email = :email", User.class).setParameter("email", email).uniqueResult();
@@ -70,6 +84,16 @@ public class LoginController {
          }
     }
 
+    /**
+     * login method
+     * @param session hibernate session
+     * @param email email of the user
+     * @param password password of the user
+     * @param username username of the user
+     * @return -1 if user can't login. user entered wrong data
+     * @return userId if everything is ok
+     * @throws UserNotFoundException
+     */
     private int login(Session session, String email, String password, String username ) throws UserNotFoundException{
        // Transaction tx = session.beginTransaction();
         User user = findUserByEmail(session, email);
@@ -81,25 +105,24 @@ public class LoginController {
         }
     }
 
+    /**
+     * method to navigate to the next page - calendar or sign in  with css
+     * @param pageName sign in or calendar
+     * @param button what button is pressed to navigate
+     * @throws IOException input output exception
+     */
     private void navigateToNextPage(String pageName, Button button) throws IOException {
         try {
-            // Load the FXML file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName + ".fxml"));
             Parent root = loader.load();
-
-            // Add CSS to the root node
             String cssPath = getClass().getResource(pageName + ".css").toExternalForm();
             root.getStylesheets().add(cssPath);
-
-            // Get the current stage (window)
             Stage stage = (Stage) button.getScene().getWindow();
-
-            // Set the new scene
             Scene scene = new Scene(root);
             stage.setScene(scene);
-          //  stage.setTitle(pageName.replaceFirst("^[a-z]", c -> c.toString().toUpperCase()) + " Page");
+          //  stage.setTitle(pageName.replaceFirst("^[a-z]", c -> c.toString().toUpperCase()) + " Page"); // naming not working todo fix naming
 
-            // Check if the pageName is "calendar" and call initializeCalendar
             if (pageName.equals("calendar")) {
                 CalendarController controller = loader.getController();
                 if (controller != null) {
@@ -116,9 +139,16 @@ public class LoginController {
         }
     }
 
+    /**
+     * overloading method specifically  for calendar. because for calendar we need to pass one more param which is user id and based on this we know what user is logged in
+     * @param pageName name of the page to navigate
+     * @param button
+     * @param userId id of the user from login method
+     * @throws IOException
+     */
     private void navigateToNextPage(String pageName, Button button, int userId) throws IOException {
         try {
-            // Load the FXML file
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName + ".fxml"));
             Parent root = loader.load();
 
@@ -152,6 +182,11 @@ public class LoginController {
             errorLabel.setText("Failed to load " + pageName + " page.");
         }
     }
+
+    /**
+     * method to change page to signup fxml
+     * @throws IOException
+     */
     @FXML
     protected void onSignUpButtonClick() throws IOException {
 

@@ -2,6 +2,9 @@ package org.example.loginsystem;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * class represents calendar event entiry from database
+ */
 @Entity
 @Table(name = "CalendarEvent")
 public class CalendarEvent {
@@ -28,21 +31,6 @@ public class CalendarEvent {
     // Constructors, Getters & Setters
     public CalendarEvent() {}
 
-    public CalendarEvent(String name, String description, int userID, LocalDate eventDate, boolean done) {
-        this.name = name;
-        this.description = description;
-        this.userID = userID;
-        this.eventDate = eventDate;
-        this.done = done;
-    }
-
-    public int getEventID() {
-        return eventID;
-    }
-
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
 
     public String getName() {
         return name;
@@ -83,6 +71,10 @@ public class CalendarEvent {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    /**
+     *  to string for debugging reasons
+     */
 
     @Override
     public String toString() {

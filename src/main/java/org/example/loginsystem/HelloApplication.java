@@ -8,6 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 
+/**
+ * main method of the program loads the login page.
+ */
+
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {

@@ -21,7 +21,13 @@ public class AddEventController {
     private int userID;
     private Stage stage;
 
-    // Called by CalendarController to pass data
+    /**
+     *
+     * @param date date of the clicked event
+     * @param userID
+     * @param stage
+     * @param event what event we should display
+     */
     public void initData(LocalDate date, int userID, Stage stage, CalendarEvent event) {
         this.selectedDate = date;
         this.userID =userID;
@@ -31,7 +37,9 @@ public class AddEventController {
 
 initialize();
     }
-
+/**
+ * method called when Add/Edit/Delete window is appeared. Sets the valuable from method initData to the window if you would like to add event only date will be set
+ */
     @FXML
     public void initialize() {
         // Set default date
@@ -50,8 +58,11 @@ initialize();
         }
     }
 
+    /**
+     * method called when we press save button on Add/Edit/Delete window. displays alert if data is invalid or some data is missing. if we edit already existing event this method will call update method in database
+     */
     @FXML
-    private void saveEvent(ActionEvent actionEvent) {
+    private void saveEvent() {
         String name = eventTitleField.getText().trim();
         String description = descriptionArea.getText();
         LocalDate eventDate = eventDatePicker.getValue();
@@ -70,20 +81,20 @@ initialize();
             session.beginTransaction();
 
             if (eventToEdit == null) {
-                // ADD NEW EVENT
                 CalendarEvent newEvent = new CalendarEvent();
                 newEvent.setName(name);
                 newEvent.setDescription(description);
                 newEvent.setEventDate(eventDate);
-                newEvent.setUserID(userID); // Use passed-in user ID
+                newEvent.setUserID(userID);
                 newEvent.setDone(done);
+
                 session.save(newEvent);
             } else {
-                // UPDATE EXISTING EVENT
                 eventToEdit.setName(name);
                 eventToEdit.setDescription(description);
                 eventToEdit.setEventDate(eventDate);
                 eventToEdit.setDone(done);
+
                 session.update(eventToEdit);
             }
 
@@ -100,7 +111,9 @@ initialize();
         }
     }
 
-
+    /**
+     * method to close the Add/Edit/Delete window
+     */
     @FXML
     private void closeWindow() {
         if (stage == null) {
@@ -109,8 +122,11 @@ initialize();
         stage.close();
     }
 
+    /**
+     * method to delete event on button press. also showing an alert window to confirm delete
+     */
     @FXML
-    private void deleteEvent(ActionEvent actionEvent) {
+    private void deleteEvent() {
         if (eventToEdit == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Event");
@@ -120,7 +136,6 @@ initialize();
             return;
         }
 
-        // Confirm deletion
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Delete Event");
         confirm.setHeaderText("Are you sure you want to delete this event?");
@@ -131,7 +146,7 @@ initialize();
             try (Session session = HibernateUtl.openSession()) {
                 session.beginTransaction();
 
-                session.delete(eventToEdit); // Hibernate delete
+                session.delete(eventToEdit);
                 session.getTransaction().commit();
 
                 closeWindow();

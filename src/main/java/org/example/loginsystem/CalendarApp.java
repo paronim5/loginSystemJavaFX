@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * class for testing ui of the calendar without login or user
+ */
 public class CalendarApp extends Application {
 
     @Override

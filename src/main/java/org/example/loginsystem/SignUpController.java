@@ -16,6 +16,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * controller for signup page
+ */
 public class SignUpController {
     Session session = HibernateUtl.openSession();
     @FXML
@@ -51,7 +54,14 @@ public class SignUpController {
     @FXML
     private Label errorLabel;
 
-    private Sex sex;
+    public Sex sex;
+
+    /**
+     * navigate to the next page (only login )
+     * @param pageName
+     * @param button
+     * @throws IOException
+     */
 
     private void navigateToNextPage( String pageName, Button button) throws IOException {
         try {
@@ -75,10 +85,21 @@ public class SignUpController {
         }
     }
 
+    /**
+     * method to validate email
+     * @param email user's email
+     * @return return true if email is match this regex
+     */
     private boolean checkEmail(String email) {
         String trimmedMail = email.trim();
         return trimmedMail.matches("(?:[a-z0-9!#$%&'*+\\=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
     }
+
+    /**
+     * method to validate password
+     * @param password22
+     * @return
+     */
     private boolean checkPassword(String password22) {
         String password = password22.trim();
         if (password == null || password.isEmpty()) {
@@ -97,9 +118,12 @@ public class SignUpController {
             errorLabel.setText("Passwords do not match.");
             return false;
         }
-        System.out.println("good");
+        System.out.println("good"); // debug todo delete
             return true;
     }
+    /**
+     * method to check birthday (not null, not in the future, not more than 100 years )
+     */
     private boolean checkBirthday(LocalDate birthday) {
         if (birthday == null) {
             errorLabel.setText("Birthday cannot be empty.");
@@ -121,6 +145,13 @@ public class SignUpController {
         System.out.println("good");
         return true;
     }
+
+    /**
+     * method to check first and last
+     * @param firstname
+     * @param lastname
+     * @return
+     */
     private boolean checkName(String firstname, String lastname) {
         firstname = firstname.trim();
         lastname = lastname.trim();
@@ -136,6 +167,12 @@ public class SignUpController {
         this.lastname.setText(firstLetterCapital(lastname));
         return true;
     }
+
+    /**
+     * method to check phone number
+     * @param phoneNumber
+     * @return
+     */
     private boolean checkPhoneNumber(String phoneNumber) {
         phoneNumber = phoneNumber.trim();
         if (phoneNumber == null || phoneNumber.isEmpty()) {
@@ -149,6 +186,12 @@ public class SignUpController {
         System.out.println("good");
         return true;
     }
+
+    /**
+     * method to check username
+     * @param username
+     * @return
+     */
     private boolean checkUsername(String username) {
         if (username == null || username.isEmpty()) {
             errorLabel.setText("Username cannot be empty.");
@@ -161,7 +204,13 @@ public class SignUpController {
         System.out.println("good");
         return true;
     }
-private boolean checkGender(String gender) {
+
+    /**
+     * method to check if the gender is not null
+     * @param gender
+     * @return
+     */
+    private boolean checkGender(String gender) {
         if (selectedSexLabel.toString().contains("None")) {
             errorLabel.setText("Gender cannot be empty.");
             return false;
@@ -189,19 +238,17 @@ private boolean checkGender(String gender) {
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()); // ai code to convert data
     }
 
+    /**
+     * initialize method called as soon as page is loaded
+     */
     @FXML
     public void initialize() { // ai code
-        // Initialize the ToggleGroup
         sexToggleGroup = new ToggleGroup();
-
-        // Assign the ToggleGroup to each RadioButton
         maleRadioButton.setToggleGroup(sexToggleGroup);
         femaleRadioButton.setToggleGroup(sexToggleGroup);
         otherRadioButton.setToggleGroup(sexToggleGroup);
 
         otherRadioButton.setSelected(true);
-
-        // Add a listener to the ToggleGroup to detect changes
         sexToggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == maleRadioButton) {
                 selectedSexLabel.setText("Selected Sex: Male");
@@ -219,6 +266,10 @@ private boolean checkGender(String gender) {
     }
     //endregion
 
+    /**
+     * method to validate data from user using methods abovementioned
+     * @return
+     */
     private boolean validateData() {
         if (checkEmail(email.getText()) &&
                 checkPassword(password.getText()) &&
@@ -231,6 +282,12 @@ private boolean checkGender(String gender) {
         }
 return false;
     }
+
+    /**
+     * method to add user into the database if data is valid
+     * @param session hibernate session
+     * @return
+     */
     private boolean addNewUserToDB(Session session) {
         if (validateData()) {
             Transaction transaction = null;
@@ -261,10 +318,18 @@ return false;
         }
         return false;
     }
+
+    /**
+     * method to navigate back to the login page
+     * @throws IOException
+     */
     @FXML
     protected void onBackButtonClick() throws IOException {
         navigateToNextPage("login" , backButton);
     }
+    /**
+     * method to sign up
+     */
     @FXML
     protected void onSignUpButtonClick() {
         boolean valid = addNewUserToDB(session);
@@ -275,6 +340,9 @@ return false;
        // navigateToNextPage("login" , signUpButton);
     }
 
+    /**
+     * method to clear fields if user successfully signed up
+     */
     private void clearFields() {
         email.setText("");
         password.setText("");

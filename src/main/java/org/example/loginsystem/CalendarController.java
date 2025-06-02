@@ -34,7 +34,7 @@ public class CalendarController {
     private int currentUserID ; // TODO: Replace with real logged-in user ID
 
     /**
-     * Initializes the calendar when the FXML is loaded.
+     * initializes the calendar when the FXML is loaded.
      */
     public void initializeCalendar() {
         currentYearMonth = YearMonth.now();
@@ -47,20 +47,21 @@ public class CalendarController {
         addEventMenuItem.setOnAction(e -> showAddEventDialog());
     }
 
+    /**
+     * @param currentUserID
+     * setter for currentUserId
+     */
     public void setCurrentUserID(int currentUserID) {
         this.currentUserID = currentUserID;
     }
 
     /**
-     * Populates the calendar grid for the current month/year.
+     * populates the calendar grid for the current month/year starts from monday.
      */
     private void populateCalendar() {
+        //ai code
         calendarGrid.getChildren().clear();
-
-        // Update month/year label
         monthYearLabel.setText(currentYearMonth.getMonth().toString() + " " + currentYearMonth.getYear());
-
-        // --- Add Day Headers (Monday - Sunday) ---
         String[] dayNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         for (int i = 0; i < 7; i++) {
             Label header = new Label(dayNames[i]);
@@ -69,13 +70,10 @@ public class CalendarController {
             GridPane.setColumnIndex(header, i);
             calendarGrid.add(header, i, 0);
         }
-
-        // --- First day of the month and alignment ---
         LocalDate firstDay = currentYearMonth.atDay(1);
         int firstDayOfWeekValue = firstDay.getDayOfWeek().getValue(); // Monday=1 ... Sunday=7
         int firstDayColumn = (firstDayOfWeekValue + 6) % 7; // Map Monday to column 0
 
-        // --- Fill in the calendar grid ---
         int row = 1;
         int col = firstDayColumn;
 
@@ -93,22 +91,18 @@ public class CalendarController {
         }
     }
     /**
-     * Creates a cell (VBox) representing a single calendar day.
+     * creates a cell to display a single calendar day.
      */
     private VBox createDayCell(LocalDate date, CalendarEvent event) {
         VBox dayBox = new VBox(5);
         dayBox.setStyle("-fx-alignment: center;");
         dayBox.setPrefSize(80, 60);
-
         Label dayLabel = new Label(String.valueOf(date.getDayOfMonth()));
         dayLabel.setStyle("-fx-font-size: 14px;");
-
         if (event != null) {
             Label eventLabel = new Label("EVENT");
             eventLabel.setStyle("-fx-text-fill: black; -fx-font-size: 10px;");
             dayBox.getChildren().addAll(dayLabel, eventLabel);
-
-            // Set background based on "done" status
             if (event.isDone()) {
                 dayBox.setStyle(
                         "-fx-background-color: violet; -fx-alignment: center; -fx-padding: 5px;"
@@ -122,20 +116,18 @@ public class CalendarController {
             dayBox.getChildren().add(dayLabel);
         }
 
-        // On click: open add/edit event window
         dayBox.setOnMouseClicked(e -> {
             if (event != null) {
-                showAddEventWindow(date, currentUserID, event); // Edit event
+                showAddEventWindow(date, currentUserID, event); // show edit window
             } else {
-                showAddEventWindow(date, currentUserID, null); // Add new event
+                showAddEventWindow(date, currentUserID, null); // show add new event window
             }
         });
-
         return dayBox;
     }
 
     /**
-     * Fetches a single event for a given date and user.
+     * fetch user event for a specific date(slow)
      */
     private CalendarEvent getEventForDate(LocalDate date, int userId) {
         try (Session session = HibernateUtl.openSession()) {
@@ -154,7 +146,7 @@ public class CalendarController {
     }
 
     /**
-     * Changes the displayed month by a number of months.
+     * changes the displayed month
      */
     private void changeMonth(int monthsToAdd) {
         currentYearMonth = currentYearMonth.plusMonths(monthsToAdd);
@@ -162,7 +154,7 @@ public class CalendarController {
     }
 
     /**
-     * Resets the calendar to the current month.
+     * resets the calendar to the current month.
      */
     private void showCurrentMonth() {
         currentYearMonth = YearMonth.now();
@@ -170,7 +162,7 @@ public class CalendarController {
     }
 
     /**
-     * Opens the add-event dialog with today's date as default.
+     * opens the add-event dialog with month date as default.
      */
     private void showAddEventDialog() {
         LocalDate selectedDate = LocalDate.now();
@@ -178,7 +170,7 @@ public class CalendarController {
     }
 
     /**
-     * Shows the add/edit event dialog.
+     * shows the add/edit event dialog.
      */
     private void showAddEventWindow(LocalDate selectedDate, int currentUserID, CalendarEvent eventToEdit) {
         try {
@@ -202,7 +194,7 @@ public class CalendarController {
 
 
 
-            populateCalendar(); // Refresh after save
+            populateCalendar(); // refresh after save
 
         } catch (IOException e) {
             e.printStackTrace();
